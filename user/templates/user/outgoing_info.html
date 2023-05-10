@@ -1,0 +1,17 @@
+{% extends 'user/layout.html' %}
+
+{% block title %}
+Outgoing info
+{% endblock %}
+
+{% block info %}
+    <div class="features">
+        <h1>Manipulations</h1>
+        <form method="post">
+            {% csrf_token %}
+            <h2>Info about outgoing request</h2>
+                {{ form.username }}
+            <button class="btn btn-success" type="submit"><i class="bi bi-info-square">Get Info</i></button><br>
+        </form>
+    </div>
+{%  endblock %}

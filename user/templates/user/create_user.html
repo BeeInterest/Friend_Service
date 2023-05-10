@@ -1,0 +1,17 @@
+{% extends 'user/layout.html' %}
+
+{% block title %}
+    Create User
+{% endblock %}
+
+{% block info %}
+    <div class="features">
+        <h1>Manipulations</h1>
+        <form method="post">
+            {% csrf_token %}
+             <h2>Create User</h2>
+                {{ form.user }}<br>
+            <button class="btn btn-success" type="submit"><i class="bi bi-check-all">Submit</i></button><br>
+        </form>
+    </div>
+{%  endblock %}
