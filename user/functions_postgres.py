@@ -70,10 +70,11 @@ class PostgresTools:
                 update_relation1 = relations_table.update().where(
                     ((relations_table.columns.user1 == user2) & (relations_table.columns.user2 == user1))).values(
                     status='friend')
-                create_relation2 = relations_table.update().values(user1=user1, user2=user2,
-                                                                   status='friend')
+                update_relation2 = relations_table.update().where(
+                    ((relations_table.columns.user1 == user1) & (relations_table.columns.user2 == user2))).values(
+                    status='friend')
                 conn.execute(update_relation1)
-                conn.execute(create_relation2)
+                conn.execute(update_relation2)
                 conn.commit()
             elif self.relation_exists(user1, user2) == "":
                 create_relation1 = relations_table.insert().values(user1=user1, user2=user2,
