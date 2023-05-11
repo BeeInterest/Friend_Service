@@ -65,14 +65,24 @@ class PostgresTools:
             conn.commit()
 
     def send_friendship(self, user1: str, user2: str):
-        if user1 != '' and user2 != '' and self.relation_exists(user1, user2) == "":
-            create_relation1 = relations_table.insert().values(user1=user1, user2=user2,
-                                                               status='outgoing request')
-            create_relation2 = relations_table.insert().values(user1=user2, user2=user1,
-                                                               status='incoming request')
-            conn.execute(create_relation1)
-            conn.execute(create_relation2)
-            conn.commit()
+        if user1 != '' and user2 != '':
+            if "outgoing" in self.relation_exists(user2, user1):
+                update_relation1 = relations_table.update().where(
+                    ((relations_table.columns.user1 == user2) & (relations_table.columns.user2 == user1))).values(
+                    status='friend')
+                create_relation2 = relations_table.insert().values(user1=user1, user2=user2,
+                                                                   status='friend')
+                conn.execute(update_relation1)
+                conn.execute(create_relation2)
+                conn.commit()
+            elif self.relation_exists(user1, user2) == "":
+                create_relation1 = relations_table.insert().values(user1=user1, user2=user2,
+                                                                   status='outgoing request')
+                create_relation2 = relations_table.insert().values(user1=user2, user2=user1,
+                                                                   status='incoming request')
+                conn.execute(create_relation1)
+                conn.execute(create_relation2)
+                conn.commit()
 
     def accept_friendship(self, user1: str, user2: str):
         string = self.relation_exists(user1, user2)
@@ -91,7 +101,7 @@ class PostgresTools:
         if "incoming" in self.relation_exists(username, username_friend):
             update_relation = relations_table.update().where(
                 (relations_table.columns.user1 == username) & (
-                            relations_table.columns.user2 == username_friend)).values(
+                        relations_table.columns.user2 == username_friend)).values(
                 status='follower')
             conn.execute(update_relation)
             conn.commit()
