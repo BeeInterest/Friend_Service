@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+
+    postgres_friend:
+        image: postgres
+        restart: on-failure
+        container_name: postgres_friend
+        ports:
+            -  "5432:5432"
+        user: 'postgres'
+        env_file:
+            - .env
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready","-U", "postgres", "-p", "1qwe2rty", "-d", "friend_service" ]
+            interval: 10s
+            timeout: 10s
+            retries: 5
+        volumes:
+            - postgres_data:/var/lib/posgresql/dates/
+
+    friend_service:
+        restart: always
+        build:
+            context: ..\
+        container_name: friend_service
+        ports:
+            - "8000:8000"
+        env_file:
+            - .env.dev
+        depends_on:
+            postgres_friend:
+                condition: service_healthy
+        volumes:
+            - friend_service_api:/app
+        command: python manage.py runserver 0.0.0.0:8000
+volumes:
+    postgres_data:
+    friend_service_api:

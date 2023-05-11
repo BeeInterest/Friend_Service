@@ -9,8 +9,11 @@ urlpatterns = [
     path('accept', views.accept, name='accept'),
     path('reject', views.reject, name='reject'),
     path('delete', views.delete, name='delete'),
+    path('users', views.users, name='users'),
+    path('relations', views.relations, name='relations'),
     path('outgoing', views.outgoing, name='outgoing'),
     path('incoming', views.incoming, name='incoming'),
     path('friend', views.friend, name='friend'),
+    path('follower', views.follower, name='follower'),
     path('status', views.status, name='status'),
 ]

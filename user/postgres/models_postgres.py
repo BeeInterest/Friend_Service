@@ -4,7 +4,7 @@ import psycopg2
 
 con = psycopg2.connect(
     database="friend_service", user='postgres',
-    password='1qwe2rty', host='localhost'
+    password='1qwe2rty', host='postgres_friend'
 )
 con.autocommit = True
 cursor = con.cursor()
@@ -20,7 +20,7 @@ for command in sqlcom:
 con.commit()
 con.close()
 
-engine = create_engine('postgresql://postgres:1qwe2rty@localhost/friend_service')
+engine = create_engine('postgresql://postgres:1qwe2rty@postgres_friend/friend_service')
 meta = MetaData()
 
 users_table = Table(

@@ -10,8 +10,8 @@ Reject
         <form method="post">
             {% csrf_token %}
             <h2>Reject friendship</h2>
-                {{ form.user }}
-                {{ form.user_friend }}
+                {{ form.user1 }}<br>
+                {{ form.user2 }}<br>
             <button class="btn btn-success" type="submit"><i class="bi bi-check-all">Submit</i></button><br>
         </form>
     </div>

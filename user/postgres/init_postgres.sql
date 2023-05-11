@@ -1,3 +1,13 @@
+CREATE TABLE IF NOT EXISTS users (
+    id uuid primary key not null,
+    username varchar(500) not null
+);
+CREATE TABLE IF NOT EXISTS relations (
+    id serial primary key not null,
+    user1 varchar(500) not null,
+    user2 varchar(500) not null,
+    status varchar(50) not null
+);
 DELETE FROM users;
 DELETE FROM relations;
 INSERT INTO users(id, username)
@@ -15,3 +25,7 @@ VALUES
 ('3b191e60-ab8f-4ad7-b298-27649a9235b5','noshe2893'),
 ('5bf2ca09-66d4-4825-ac9d-3a56158ffbd1','sheko34223'),
 ('fbacf402-b512-4ab9-ab3a-1ac04dce5b6c','dira0743234');
+INSERT INTO relations(user1, user2, status)
+VALUES
+('ylbek134','maluk890','outgoing request'),
+('maluk890','ylbek134','incoming request');

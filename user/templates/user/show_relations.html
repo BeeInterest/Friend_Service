@@ -1,17 +1,15 @@
 {% extends 'user/layout.html' %}
 
 {% block title %}
-Status info
+Relations
 {% endblock %}
 
 {% block info %}
     <div class="features">
         <h1>Manipulations</h1>
-        <form method="post">
+        <form method="get">
             {% csrf_token %}
-            <h2>Info about status friendship</h2>
-                {{ form.user1 }}<br>
-                {{ form.user2}}<br>
+            <h2>Show relations</h2>
             <button class="btn btn-success" type="submit"><i class="bi bi-info-square">Get Info</i></button><br>
         </form>
     </div>

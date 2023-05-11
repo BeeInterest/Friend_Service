@@ -1,7 +1,7 @@
 {% extends 'user/layout.html' %}
 
 {% block title %}
-Accept
+Followers
 {% endblock %}
 
 {% block info %}
@@ -9,10 +9,9 @@ Accept
         <h1>Manipulations</h1>
         <form method="post">
             {% csrf_token %}
-            <h2>Accept friendship</h2>
-                {{ form.user1 }}<br>
-                {{ form.user2}}<br>
-            <button class="btn btn-success" type="submit"><i class="bi bi-check-all">Submit</i></button><br>
+            <h2>Info about followers</h2>
+                {{ form.username }}
+            <button class="btn btn-success" type="submit"><i class="bi bi-info-square">Get Info</i></button><br>
         </form>
     </div>
 {%  endblock %}

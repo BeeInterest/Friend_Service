@@ -1,18 +1,12 @@
-from .models import Relations
-from django.forms import ModelForm, TextInput
+from django import forms
 
-class RelationsForm(ModelForm):
-    class Meta:
-        model = Relations
-        fields = ['user', 'user_friend']
-        widgets = {
-            'user': TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Username1'
-            }),
-            'user_friend': TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Username2'
-            })
-        }
 
+class TwoUsersForm(forms.Form):
+    user1 = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'username1'}),
+                            max_length=500)
+    user2 = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'username2'}),
+                            max_length=500)
+
+class UserForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'username'}),
+                            max_length=500)
