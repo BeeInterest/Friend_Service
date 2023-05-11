@@ -90,7 +90,8 @@ class PostgresTools:
     def reject_friendship(self, username: str, username_friend: str):
         if "incoming" in self.relation_exists(username, username_friend):
             update_relation = relations_table.update().where(
-                relations_table.columns.user1 == username).values(
+                (relations_table.columns.user1 == username) & (
+                            relations_table.columns.user2 == username_friend)).values(
                 status='follower')
             conn.execute(update_relation)
             conn.commit()
@@ -99,11 +100,11 @@ class PostgresTools:
         if "friend" in self.relation_exists(username, username_friend):
             update_relation1 = relations_table.update().where(
                 (relations_table.columns.user1 == username) & (
-                            relations_table.columns.user2 == username_friend)).values(
+                        relations_table.columns.user2 == username_friend)).values(
                 status='follower')
             update_relation2 = relations_table.update().where(
                 (relations_table.columns.user1 == username_friend) & (
-                            relations_table.columns.user2 == username)).values(
+                        relations_table.columns.user2 == username)).values(
                 status='outgoing request')
             conn.execute(update_relation1)
             conn.execute(update_relation2)
@@ -113,7 +114,7 @@ class PostgresTools:
         if self.user_exists(username):
             select_request = conn.execute(select(relations_table).where(
                 (relations_table.columns.user1 == username) & (
-                            relations_table.columns.status == 'outgoing request'))).fetchall()
+                        relations_table.columns.status == 'outgoing request'))).fetchall()
             conn.commit()
             result = self.get_list(select_request)
             return result
@@ -122,7 +123,7 @@ class PostgresTools:
         if self.user_exists(username):
             select_request = conn.execute(select(relations_table).where(
                 (relations_table.columns.user1 == username) & (
-                            relations_table.columns.status == 'incoming request'))).fetchall()
+                        relations_table.columns.status == 'incoming request'))).fetchall()
             conn.commit()
             result = self.get_list(select_request)
             return result
@@ -139,7 +140,7 @@ class PostgresTools:
         if self.user_exists(username):
             select_request = conn.execute(select(relations_table).where(
                 (relations_table.columns.user1 == username) & (
-                            relations_table.columns.status == 'follower'))).fetchall()
+                        relations_table.columns.status == 'follower'))).fetchall()
             conn.commit()
             result = self.get_list(select_request)
             return result
